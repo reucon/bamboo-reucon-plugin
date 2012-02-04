@@ -1,0 +1,1 @@
+[@ww.label labelKey="com.reucon.bamboo.say" name="say"/]

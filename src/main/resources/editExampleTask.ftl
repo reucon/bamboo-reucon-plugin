@@ -1,0 +1,1 @@
+[@ww.textfield labelKey="com.reucon.bamboo.say" name="say" required='true'/]
