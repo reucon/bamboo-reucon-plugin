@@ -2,20 +2,18 @@
     <plugin-info>
         <description>${project.description}</description>
         <version>${project.version}</version>
-        <vendor name="${project.organization.name}" url="${project.organization.url}" />
+        <vendor name="${project.organization.name}" url="${project.organization.url}"/>
     </plugin-info>
 
-    <!-- internationalize your plugin -->
-    <resource type="i18n" name="com.reucon.bamboo language" location="english"/>
+    <resource type="i18n" name="com.reucon.bamboo language" location="messages"/>
 
-    <!-- defines an example task -->
-    <taskType name="bamboo-reucon-plugin" class="com.reucon.bamboo.ExampleTask" key="test">
-      <description>A simple Hello World Task</description>
-      <!-- Categories available in 3.1: "builder", "test" and "deployment"
-      <category name=""/>
-      -->
-      <configuration class="com.reucon.bamboo.ExampleTaskConfigurator"/>
-      <resource type="freemarker" name="edit" location="editExampleTask.ftl"/>
-      <resource type="freemarker" name="view" location="viewExampleTask.ftl"/>
+    <taskType name="Create Release Properties" class="com.reucon.bamboo.CreateReleasePropertiesTask" key="test">
+        <description>Create a release.properties file to use with maven-release:prepare -B</description>
+        <!-- Categories available in 3.1: "builder", "test" and "deployment"
+        <category name=""/>
+        -->
+        <configuration class="com.reucon.bamboo.CreateReleasePropertiesTaskConfigurator"/>
+        <resource type="freemarker" name="edit" location="editExampleTask.ftl"/>
+        <resource type="freemarker" name="view" location="viewExampleTask.ftl"/>
     </taskType>
 </atlassian-plugin>
