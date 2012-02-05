@@ -1,11 +1,7 @@
 package com.reucon.bamboo;
 
 import com.atlassian.bamboo.build.logger.BuildLogger;
-import com.atlassian.bamboo.task.TaskContext;
-import com.atlassian.bamboo.task.TaskException;
-import com.atlassian.bamboo.task.TaskResult;
-import com.atlassian.bamboo.task.TaskResultBuilder;
-import com.atlassian.bamboo.task.TaskType;
+import com.atlassian.bamboo.task.*;
 import com.atlassian.bamboo.v2.build.BuildContext;
 import com.atlassian.bamboo.variable.CustomVariableContext;
 import com.atlassian.bamboo.variable.VariableContext;
@@ -13,31 +9,25 @@ import com.atlassian.bamboo.variable.VariableDefinitionContext;
 import org.apache.commons.lang.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.Map;
-import java.util.Properties;
 
-import static com.reucon.bamboo.CreateReleasePropertiesTaskConfigurator.RELEASE_QUALIFIER;
-import static com.reucon.bamboo.CreateReleasePropertiesTaskConfigurator.RELEASE_VERSION_VARIABLE;
-import static com.reucon.bamboo.CreateReleasePropertiesTaskConfigurator.SNAPSHOT_QUALIFIER;
+import static com.reucon.bamboo.CreateReleasePropertiesTaskConfigurator.*;
 
 public class CreateReleasePropertiesTask implements TaskType
 {
-    private static final String RELEASE_PROPERTIES_FILENAME = "release.properties";
     private static final String RELEASE_VERSION_PROPERTY = "releaseVersion";
     private static final String DEVELOPMENT_VERSION_PROPERTY = "developmentVersion";
 
     private CustomVariableContext customVariableContext;
 
+    /* automatically injected by Bamboo */
     public void setCustomVariableContext(CustomVariableContext customVariableContext)
     {
         this.customVariableContext = customVariableContext;
     }
 
     @NotNull
-    @java.lang.Override
+    @Override
     public TaskResult execute(@NotNull final TaskContext taskContext) throws TaskException
     {
         final TaskResultBuilder taskResultBuilder = TaskResultBuilder.create(taskContext);
@@ -51,7 +41,7 @@ public class CreateReleasePropertiesTask implements TaskType
         final VariableDefinitionContext releaseVersionVariable = definitions.get(releaseVersionVariableName);
         if (releaseVersionVariable == null)
         {
-            buildLogger.addErrorLogEntry("Unable to read releaseVersion from variable '" + releaseVersionVariableName + "'");
+            buildLogger.addErrorLogEntry(String.format("Unable to read releaseVersion from variable '%s'", releaseVersionVariableName));
             return taskResultBuilder.failed().build();
         }
         final String releaseVersion = releaseVersionVariable.getValue();
@@ -66,12 +56,13 @@ public class CreateReleasePropertiesTask implements TaskType
         }
         catch (IllegalArgumentException e)
         {
-            buildLogger.addErrorLogEntry(String.format("Detected invalid releaseVersion '%s': %s", releaseVersion, e.getMessage()));
+            buildLogger.addErrorLogEntry(String.format("Detected invalid releaseVersion '%s' (from variable '%s'): %s",
+                    releaseVersion, releaseVersionVariableName, e.getMessage()));
             return taskResultBuilder.failed().build();
         }
 
-        buildLogger.addBuildLogEntry(String.format("Detected releaseVersion '%s' and derived developmentVersion '%s'",
-                releaseVersion, developmentVersion));
+        buildLogger.addBuildLogEntry(String.format("Detected releaseVersion '%s' (from variable '%s') and derived developmentVersion '%s'",
+                releaseVersion, releaseVersionVariableName, developmentVersion));
 
         setVariable(taskContext, DEVELOPMENT_VERSION_PROPERTY, developmentVersion);
         setVariable(taskContext, RELEASE_VERSION_PROPERTY, releaseVersion);
@@ -95,7 +86,7 @@ public class CreateReleasePropertiesTask implements TaskType
             }
             else
             {
-                buildLogger.addBuildLogEntry(String.format("Not setting variable %s because it is already set", key));
+                buildLogger.addBuildLogEntry(String.format("Not setting variable '%s' because it is already set", key));
             }
             return;
         }

@@ -24,6 +24,11 @@ public class DevelopmentVersionBuilder
 
     public String buildDevelopmentVersion(String releaseVersion) throws IllegalArgumentException
     {
+        if (releaseVersion == null)
+        {
+            throw new IllegalArgumentException("Invalid release version: null");
+        }
+
         final Matcher matcher = OSGI_VERSION_PATTERN.matcher(releaseVersion);
 
         if (matcher.matches())

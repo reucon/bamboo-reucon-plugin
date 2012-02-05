@@ -47,4 +47,10 @@ public class DevelopmentVersionBuilderTest
     {
         builder.buildDevelopmentVersion("1.2.3.RC1 (Early Q1)");
     }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testBuildDevelopmentVersionWithNullReleaseVersion() throws Exception
+    {
+        builder.buildDevelopmentVersion(null);
+    }
 }

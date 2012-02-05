@@ -24,6 +24,12 @@ public class CreateReleasePropertiesTaskConfigurator extends AbstractTaskConfigu
 
     private TextProvider textProvider;
 
+    /* automatically injected by Bamboo */
+    public void setTextProvider(final TextProvider textProvider)
+    {
+        this.textProvider = textProvider;
+    }
+
     @NotNull
     @Override
     public Map<String, String> generateTaskConfigMap(@NotNull final ActionParametersMap params, @Nullable final TaskDefinition previousTaskDefinition)
@@ -82,10 +88,5 @@ public class CreateReleasePropertiesTaskConfigurator extends AbstractTaskConfigu
         {
             errorCollection.addError(key, textProvider.getText("com.reucon.bamboo." + key + ".error"));
         }
-    }
-
-    public void setTextProvider(final TextProvider textProvider)
-    {
-        this.textProvider = textProvider;
     }
 }
