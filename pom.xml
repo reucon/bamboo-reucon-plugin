@@ -18,7 +18,42 @@
     <description>reucon plugin for Atlassian Bamboo.</description>
     <packaging>atlassian-plugin</packaging>
 
+    <url>https://github.com/reucon/bamboo-reucon-plugin</url>
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
+    <developers>
+        <developer>
+            <name>Stefan Reuter</name>
+            <id>srt</id>
+            <email>stefan.reuter at reucon.com</email>
+            <timezone>+1</timezone>
+        </developer>
+    </developers>
+    <scm>
+        <connection>scm:git:git://github.com/reucon/bamboo-reucon-plugin.git</connection>
+        <developerConnection>scm:git:git@github.com:reucon/bamboo-reucon-plugin.git</developerConnection>
+    </scm>
+    <distributionManagement>
+        <repository>
+            <id>reucon</id>
+            <url>https://secure.reucon.net/nexus/content/repositories/opensource</url>
+        </repository>
+        <snapshotRepository>
+            <id>reucon</id>
+            <url>https://secure.reucon.net/nexus/content/repositories/opensource-snapshots</url>
+        </snapshotRepository>
+        <site>
+            <id>reucon</id>
+            <url>dav:https://secure.reucon.net/maven/projects/public/${project.artifactId}/${project.version}</url>
+        </site>
+    </distributionManagement>
+
     <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <bamboo.version>3.3</bamboo.version>
         <bamboo.data.version>3.2.2</bamboo.data.version>
         <amps.version>3.7.3</amps.version>
@@ -61,6 +96,25 @@
                     <target>1.6</target>
                 </configuration>
             </plugin>
+            <plugin>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>2.1.2</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
+        <extensions>
+            <extension>
+                <groupId>org.apache.maven.wagon</groupId>
+                <artifactId>wagon-webdav-jackrabbit</artifactId>
+                <version>2.2</version>
+            </extension>
+        </extensions>
     </build>
 </project>
