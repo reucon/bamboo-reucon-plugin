@@ -7,7 +7,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.reucon.bamboo</groupId>
     <artifactId>bamboo-reucon-plugin</artifactId>
-    <version>1.0.0.CI-SNAPSHOT</version>
+    <version>1.0.1.CI-SNAPSHOT</version>
 
     <organization>
         <name>reuter network consulting</name>
