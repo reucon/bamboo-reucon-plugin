@@ -41,7 +41,7 @@ public class DevelopmentVersionBuilder
         }
         else
         {
-            throw new IllegalArgumentException(String.format("Invalid release version: %s is not an OSGI compliant version.", releaseVersion));
+            throw new IllegalArgumentException(String.format("Invalid release version: '%s' is not OSGI compliant.", releaseVersion));
         }
     }
 
