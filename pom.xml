@@ -38,11 +38,11 @@
     <distributionManagement>
         <repository>
             <id>reucon</id>
-            <url>https://nexus.reucon.com/content/repositories/opensource</url>
+            <url>https://nexus.reucon.com/repository/opensource</url>
         </repository>
         <snapshotRepository>
             <id>reucon</id>
-            <url>https://nexus.reucon.com/content/repositories/opensource-snapshots</url>
+            <url>https://nexus.reucon.com/repository/opensource-snapshots</url>
         </snapshotRepository>
         <site>
             <id>reucon</id>
